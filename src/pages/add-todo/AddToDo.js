@@ -1,11 +1,19 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import { useHistory } from "react-router-dom";
 import NavBar from "../NavBar";
 const AddToDo = () => {
-  const [todoText, setToDoText] = useState("");
-  //const todoText = useRef();
+  const todoText = useRef();
+  const history = useHistory();
   const addToDo = (e) => {
     e.preventDefault();
-    console.log(todoText.current.value);
+
+    const todoString = todoText.current.value;
+    const initialTodo = localStorage.getItem("todo")
+      ? JSON.parse(localStorage.getItem("todo")) //json changes string to object or array
+      : [];
+    initialTodo.push(todoString);
+    localStorage.setItem("todo", JSON.stringify(initialTodo));
+    history.push("/");
   };
 
   return (
@@ -13,13 +21,8 @@ const AddToDo = () => {
       <NavBar />
       <div className="todo_container">
         ADD to do
-        <br />
         <form onSubmit={addToDo}>
-          <input
-            type="text"
-            value={todoText}
-            onChange={(e) => setToDoText(e.target.value.replace(/\D/g, ""))}
-          />
+          <input type="text" ref={todoText} />
           <button>save</button>
         </form>
       </div>
