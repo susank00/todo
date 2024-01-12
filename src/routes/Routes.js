@@ -1,26 +1,28 @@
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, BrowserRouter, Switch } from "react-router-dom";
 import MainPage from "../pages/mainPage/MainPage";
 import AddToDo from "../pages/add-todo/AddToDo";
-import ViewPage from "../pages/mainPage/ViewPage/ViewPage";
+import ViewPage from "../pages/ViewPage/ViewPage";
 import login from "../pages/login/Login";
+import NotFound from "../pages/notfound/NotFound";
 
 const Routes = () => {
   return (
-    <>
-      <Route path="/" exact>
-        <Redirect to="/home" />
-      </Route>
-      <Route path="/home" component={MainPage} exact></Route>
-      <Route path="/add" exact>
-        localStorage.getItem("loggedIn") ?
-        <>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/" exact>
+          <Redirect to="/home" />
+        </Route>
+        <Route path="/home" component={MainPage} exact></Route>
+        <Route path="/add" exact>
           <AddToDo />
-        </>
-        :<Redirect to="/login"></Redirect>
-      </Route>
-      <Route path="/view/:id" component={ViewPage} exact />
-      <Route path="/login" component={login} />
-    </>
+        </Route>
+        <Route path="/view/:id" component={ViewPage} exact />
+        <Route path="/Login" component={login} />
+        <Route path="*">
+          <NotFound />
+        </Route>
+      </Switch>
+    </BrowserRouter>
   );
 };
 

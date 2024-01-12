@@ -12,21 +12,32 @@ const MainPage = () => {
 
       <div className="todo_container">
         <h3>your todo:</h3>
-        {getTodo.map((el, index) => (
+
+        {getTodo && getTodo.length > 0 ? (
           <>
-            <div className="single_todo">
-              {el}
-              <Link to={`/view/${index}`}>
-                <FaRegEye size={"20px"} />{" "}
-              </Link>
-              {/*
+            {getTodo.map((el, index) => (
+              <>
+                <div className="single_todo">
+                  {el}
+                  <Link to={`/view/${index}`}>
+                    <FaRegEye size={"20px"} />{" "}
+                  </Link>
+                  {/*
               <Link to={"/view/" + el}>
                 <FaRegEye size={"20px"} />{" "}
               </Link>{" "}      this i salso used but old we will use back tick easy
         */}
-            </div>
+                </div>
+              </>
+            ))}
           </>
-        ))}
+        ) : (
+          <>
+            <center>
+              nothing to show. please <Link to="/add">ADD SOME</Link>
+            </center>
+          </>
+        )}
       </div>
     </>
   );
